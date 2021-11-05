@@ -11,14 +11,17 @@ function App() {
   const [contact, setContact] = useState(data);
 
   function updateData(obj){
-    const newList = contact.map((item) => {
-      if (obj.id === item.id) {
-        return obj;
-      } else {
-        return item;
-      }
-    });
-    setContact(newList)
+    console.log("UpdateData");
+    // const newList = contact.map((item) => {
+    //   if (obj.id === item.id) {
+    //     return obj;
+    //   } else {
+    //     return item;
+    //   }
+    // });
+    contact.push(obj);
+    console.log("New List: ", contact);
+    setContact(contact);
   }
 
   return (
