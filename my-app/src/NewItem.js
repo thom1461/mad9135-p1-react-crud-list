@@ -2,33 +2,41 @@ import { NavLink } from "react-router-dom";
 import { useState } from 'react';
 
 export default function NewItem({data, updateData}){
-    const [input, setInput] = useState('');
-    let newContact = {id: "", name: "", email: "newEmail"};
-    let newId = Date.now();
+    const [input, setInput] = useState({
+        id: "", 
+        name: "", 
+        email: ""
+    });
+    input.id = Date.now();
 
-    function saveChange(ev){
-        ev.preventDefault();
-        setInput(ev.target.value);
-        newContact.id = newId;
-        newContact.name = input;
-        console.log("New Update: ", newContact);
+    function handleChange(ev){
+        const value = ev.target.value;
+        setInput({
+            ...input,
+            [ev.target.name]: value
+        });
     }
 
-    function update(ev){
+    function handleSave(ev){
+        const value = ev.target.value;
         ev.preventDefault();
-        setInput(ev.target.value);
-        newContact.id = newId;
-        newContact.name = input;
-        console.log("New Update: ", newContact);
-        updateData(newContact);
+        setInput({
+            ...input,
+            [ev.target.name]: value
+        });
+        updateData(input);
     }
 
     return(
-        <div>
-            <input value={input} type="text" onInput={saveChange}/>
-            {/* <input data-id={item.id} value={item.email} type="text" onChange={save} /> */}
+        <form>
+            <label>Name:
+                <input value={input.name} name="name" type="text" onChange={handleChange}/>
+            </label>
+            <label>Email:
+                <input value={input.email} name="email" type="text" onChange={handleChange}/>
+            </label>
             <div>
-                <button className="save" onClick={update}>
+                <button className="save" onClick={handleSave}>
                     <NavLink to="/list">
                         Save
                     </NavLink>
@@ -39,6 +47,6 @@ export default function NewItem({data, updateData}){
                     </NavLink>
                 </button>
             </div> 
-        </div>
+        </form>
     );
 }
