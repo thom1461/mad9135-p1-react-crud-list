@@ -28,14 +28,14 @@ export default function NewItem({data, updateData}){
     }
 
     return(
-        <form>
+        <form className="newItemF">
             <label>Name:
                 <input value={input.name} name="name" type="text" onChange={handleChange}/>
             </label>
             <label>Email:
                 <input value={input.email} name="email" type="text" onChange={handleChange}/>
             </label>
-            <div>
+            <div className="newItemB">
                 <button className="save" onClick={handleSave}>
                     <NavLink to="/list">
                         Save

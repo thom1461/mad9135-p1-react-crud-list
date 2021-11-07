@@ -1,18 +1,18 @@
-import { Route, NavLink  } from 'react-router-dom';
+//import { Route, NavLink  } from 'react-router-dom';
 import ListItem from './ListItem';
 import EditItem from './EditItem';
 import { useState } from 'react';
 
-export default function List({data, updateData}){
+export default function List({data, updateData, editUpdate}){
 
     const [contactId, setContactId] = useState('');
     console.log("Data: ", data);
-    //console.log("Update Data: ", updateData);
 
     function editClick(ev) {
         ev.preventDefault();
-        console.log('clicked edit');
+        console.log('Clicked Edit');
         setContactId(ev.target.getAttribute('data-id'));
+        console.log("id: ", setContactId)
     }
     function saveClick(ev) {
         ev.preventDefault();
@@ -29,20 +29,22 @@ export default function List({data, updateData}){
         setContactId('');
     }
 
-    const Items = data.map((item) => {
+    const items = data.map((item) => {
+
         if (item.id === contactId) {
             return (
                 <EditItem
                     key={item.id}
                     item={item}
+                    editUpdate={editUpdate}
                     clearEdit={clearEdit}
                     save={saveClick}
                 />
             );
         } else {
-            return <ListItem key={item.id} item={item} edit={editClick} />;
+            return <ListItem key={item.id} item={item} edit={editClick} editUpdate={editUpdate} />;
         }
     });
 
-    return <ul className="mylist">{Items}</ul>;
+    return <ul className="mylist">{items}</ul>;
 }

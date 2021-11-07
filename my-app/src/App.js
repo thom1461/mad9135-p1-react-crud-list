@@ -11,17 +11,21 @@ function App() {
   const [contact, setContact] = useState(data);
 
   function updateData(obj){
-    console.log("UpdateData");
-    // const newList = contact.map((item) => {
-    //   if (obj.id === item.id) {
-    //     return obj;
-    //   } else {
-    //     return item;
-    //   }
-    // });
     contact.push(obj);
-    console.log("New List: ", contact);
+    console.log("Contact List: ", contact);
     setContact(contact);
+  }
+
+  function editUpdate(obj){
+    const updateContact = contact.map((item) => {
+      if (obj.id === item.id) {
+        return obj;
+      } else {
+        return item;
+      }
+    });
+    setContact(updateContact);
+    console.log("Updated List: ", contact);
   }
 
   return (
@@ -32,13 +36,13 @@ function App() {
       <main>
         <Switch>
           <Route path="/list">
-            <List data={contact} updateData={updateData}/>
+            <List data={contact} updateData={updateData} editUpdate={editUpdate}/>
           </Route>
           <Route path="/newItem">
             <NewItem data={contact} updateData={updateData}/>
           </Route>
           <Route path="/">
-            <List data={contact} updateData={updateData}/>
+            <List data={contact} updateData={updateData} editUpdate={editUpdate}/>
           </Route>
         </Switch>
       </main>
