@@ -10,22 +10,33 @@ import { useState } from 'react';
 function App() {
   const [contact, setContact] = useState(data);
 
-  function updateData(obj){
-    contact.push(obj);
-    console.log("Contact List: ", contact);
-    setContact(contact);
+  function rmData(obj) {
+    console.log("rmData: ", obj.id)
+    let rmIndex = contact.findIndex( buddy => buddy['id'] === obj.id )
+    console.log("Contact Index: ", rmIndex)
+    let newContacts = contact
+    newContacts.splice(rmIndex, 1)
+    console.log("New Contacts: ", newContacts) 
+    setContact(newContacts)
   }
 
-  function editUpdate(obj){
-    const updateContact = contact.map((item) => {
+  function updateData(obj) {
+    console.log("updateData obj data: ", obj)
+    const updatedContacts = contact.map((item) => {
       if (obj.id === item.id) {
         return obj;
       } else {
         return item;
       }
-    });
-    setContact(updateContact);
-    console.log("Updated List: ", contact);
+    })
+    setContact(updatedContacts);
+  }
+
+  function newData(obj) {
+    console.log("newData");
+    contact.push(obj);
+    console.log("New List: ", contact);
+    setContact(contact);
   }
 
   return (
@@ -36,13 +47,13 @@ function App() {
       <main>
         <Switch>
           <Route path="/list">
-            <List data={contact} updateData={updateData} editUpdate={editUpdate}/>
+            <List data={contact} updateData={updateData} rmData={rmData}/>
           </Route>
           <Route path="/newItem">
-            <NewItem data={contact} updateData={updateData}/>
+            <NewItem data={contact} newData={newData}/>
           </Route>
           <Route path="/">
-            <List data={contact} updateData={updateData} editUpdate={editUpdate}/>
+            <List data={contact} updateData={updateData}/>
           </Route>
         </Switch>
       </main>
