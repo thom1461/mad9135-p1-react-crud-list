@@ -2,13 +2,24 @@ import './App.css';
 import NewItem from './NewItem';
 import AppHeader from './AppHeader';
 import List from './List';
-import { data } from './data';
+//import { data } from './data';
 import { Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
 
 
 function App() {
-  const [contact, setContact] = useState(data);
+  let data = []
+  const [contact, setContact] = useState( () => {
+    const storedData = getData
+    console.log("Stored Data: ", storedData)
+    if (storedData.length === 0) {
+      return data
+    } else {
+      data.push(storedData)
+      console.log("Data::", data)
+      return data
+    }
+})
 
   function rmData(ev) {
     console.log("rmData event: ", ev.target.parentElement.value)
@@ -19,7 +30,8 @@ function App() {
     newContacts.splice(rmIndex, 1)
     console.log("New Contacts: ", newContacts)
     setContact(newContacts)
-    window.location.reload();
+    saveData(contact)
+    window.location.reload()
   }
 
   function updateData(obj) {
@@ -31,14 +43,33 @@ function App() {
         return item;
       }
     })
-    setContact(updatedContacts);
+    setContact(updatedContacts)
+    saveData(contact)
   }
 
   function newData(obj) {
-    console.log("newData");
-    contact.push(obj);
-    console.log("New List: ", contact);
-    setContact(contact);
+    if (contact.length === 0) {
+      let newArrayData = []
+      newArrayData[0] = obj
+      console.log("New Data: ", newArrayData)
+      setContact(newArrayData)
+    } else {
+      contact.push(obj)
+      console.log("New Data: ", contact)
+      setContact(contact)
+    }
+    console.log("New List: ", contact)
+    saveData(contact)
+  }
+
+  function saveData(data) {
+    let stringifyData = JSON.stringify(data)
+    localStorage.setItem('dataObject', stringifyData);
+  }
+
+  function getData() {
+    let data = JSON.parse(localStorage.getItem('dataObject'))
+    return data
   }
 
   return (

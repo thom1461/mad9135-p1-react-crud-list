@@ -18,18 +18,29 @@ export default function List({data, updateData, rmData}){
         setContactId('');
     }
     
-    const items = data.map((item) => {
-        console.log("Loop Items: contactID: ", contactId);
-        if (item.id === contactId) {
-            return (
-                <EditItem key={item.id} item={item} save={updateData} clear={clearEdit}/>
-            )
+    function processData(data) {
+        console.log("Data Type1: ", typeof(data))
+        if (data.length === 0) {
+            return ""
         } else {
-            return (
-                <ListItem key={item.id} item={item} edit={editClick} remove={rmData} clear={clearEdit}/>
-            )
+            console.log("Data Type2: ", typeof(data))
+            data.map((item) => {
+                console.log("Loop Items: contactID: ", contactId);
+                if (item.id === contactId) {
+                    return (
+                        <EditItem key={item.id} item={item} save={updateData} clear={clearEdit}/>
+                    )
+                } else {
+                    return (
+                        <ListItem key={item.id} item={item} edit={editClick} remove={rmData} clear={clearEdit}/>
+                    )
+                }
+            })
         }
-    });
+    }
+
+    const items = processData(data)
+    console.log("List Items: ", items)
 
     return <ul className="mylist">{items}</ul>;
 }
