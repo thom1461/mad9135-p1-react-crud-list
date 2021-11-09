@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useState } from 'react';
 
-export default function NewItem({data, updateData}){
+export default function NewItem({data, newData}){
     const [input, setInput] = useState({
         id: "", 
         name: "", 
         email: ""
     });
-    input.id = Date.now();
+    input.id = Date.now().toString();
 
     function handleChange(ev){
         const value = ev.target.value;
@@ -24,7 +24,7 @@ export default function NewItem({data, updateData}){
             ...input,
             [ev.target.name]: value
         });
-        updateData(input);
+        newData(input);
     }
 
     return(

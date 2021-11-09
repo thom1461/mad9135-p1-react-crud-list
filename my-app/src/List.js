@@ -22,15 +22,12 @@ export default function List({data, updateData, rmData}){
         console.log("Loop Items: contactID: ", contactId);
         if (item.id === contactId) {
             return (
-                <EditItem
-                    key={item.id}
-                    item={item}
-                    save={updateData}
-                    clear={clearEdit}
-                />
-            );
+                <EditItem key={item.id} item={item} save={updateData} clear={clearEdit}/>
+            )
         } else {
-            return <ListItem key={item.id} item={item} edit={editClick} remove={rmData} clear={clearEdit}/>;
+            return (
+                <ListItem key={item.id} item={item} edit={editClick} remove={rmData} clear={clearEdit}/>
+            )
         }
     });
 

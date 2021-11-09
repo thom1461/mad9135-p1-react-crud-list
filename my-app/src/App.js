@@ -10,14 +10,16 @@ import { useState } from 'react';
 function App() {
   const [contact, setContact] = useState(data);
 
-  function rmData(obj) {
-    console.log("rmData: ", obj.id)
-    let rmIndex = contact.findIndex( buddy => buddy['id'] === obj.id )
+  function rmData(ev) {
+    console.log("rmData event: ", ev.target.parentElement.value)
+    let deleteId = ev.target.parentElement.value
+    let rmIndex = contact.findIndex(buddy => buddy['id'] === deleteId)
     console.log("Contact Index: ", rmIndex)
     let newContacts = contact
     newContacts.splice(rmIndex, 1)
-    console.log("New Contacts: ", newContacts) 
+    console.log("New Contacts: ", newContacts)
     setContact(newContacts)
+    window.location.reload();
   }
 
   function updateData(obj) {
@@ -53,7 +55,7 @@ function App() {
             <NewItem data={contact} newData={newData}/>
           </Route>
           <Route path="/">
-            <List data={contact} updateData={updateData}/>
+            <List data={contact} updateData={updateData} rmData={rmData}/>
           </Route>
         </Switch>
       </main>
