@@ -3,13 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 export default function ListItem({ item, edit, remove, clear }) {
 
-    // function localRemove(ev) {
-    //     ev.preventDefault()
-    //     console.log("Remove ListItem ID: ", item.id)
-    //     remove(item)
-    //     clear(ev)
-    // }
-
     return (
 
         <li>
